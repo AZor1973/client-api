@@ -1,6 +1,7 @@
 package ru.gb.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,8 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(AuthenticationUserDto authenticationUserDto) {
-       authenticationUserGateway.login(authenticationUserDto);
+        ResponseEntity<?> login = authenticationUserGateway.login(authenticationUserDto);
+        System.out.println(login);
         return "redirect:/shop/product/all";
     }
 }

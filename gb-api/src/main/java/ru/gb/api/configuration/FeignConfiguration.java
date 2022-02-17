@@ -24,22 +24,22 @@ public class FeignConfiguration {
 
     @Bean
     public ManufacturerGateway manufacturerGateway() {
-        return feignClientFactory.newFeignClient(ManufacturerGateway.class, gbApiProperties.getEndpoint().getManufacturerUrl());
+        return feignClientFactory.newFeignClient(ManufacturerGateway.class, "http://localhost:8081/api/v1/manufacturer");
     }
 
     @Bean
     public CategoryGateway categoryGateway() {
-        return feignClientFactory.newFeignClient(CategoryGateway.class, gbApiProperties.getEndpoint().getCategoryUrl());
+        return feignClientFactory.newFeignClient(CategoryGateway.class, "http://localhost:8081/api/v1/category");
     }
 
     @Bean
     public ProductGateway productGateway() {
-        return feignClientFactory.newFeignClient(ProductGateway.class, gbApiProperties.getEndpoint().getProductUrl());
+        return feignClientFactory.newFeignClient(ProductGateway.class, "http://localhost:8081/api/v1/product");
     }
 
     @Bean
     public OrderGateway orderGateway() {
-        return feignClientFactory.newFeignClient(OrderGateway.class, gbApiProperties.getEndpoint().getOrderUrl());
+        return feignClientFactory.newFeignClient(OrderGateway.class, "http://localhost:8081/api/v1/order");
     }
 
 
