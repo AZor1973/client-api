@@ -15,6 +15,10 @@ import ru.gb.api.security.api.UserGateway;
 import ru.gb.api.security.dto.AuthenticationUserDto;
 import ru.gb.api.security.dto.UserDto;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -44,9 +48,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(AuthenticationUserDto authenticationUserDto) {
-        ResponseEntity<?> login = authenticationUserGateway.login(authenticationUserDto);
-        System.out.println(login);
+    public String login(AuthenticationUserDto authenticationUserDto, HttpServletResponse response) {
+        ResponseEntity<HashMap<Object, Object>> login = authenticationUserGateway.login(authenticationUserDto);
+        String token = (String) Objects.requireNonNull(login.getBody()).get("token");
+        token = "Bearer_" + token;
+        Cookie cookie = new Cookie("Authorization", token);
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        cookie.setSecure(false);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
         return "redirect:/shop/product/all";
     }
 }
